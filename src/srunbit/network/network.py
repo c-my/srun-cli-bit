@@ -16,6 +16,8 @@ class LoginCode(Enum):
     SUCCEED = 1
     ALREADY_ONLINE = 2
     ARREARAGE = 3
+    WRONG_PASSWORD = 4
+    USER_DISABLED = 5
 
 
 class LogoutCode(Enum):
@@ -67,8 +69,13 @@ class Network:
                 return LoginCode.ARREARAGE
             elif 'You are already online.' in error_msg:
                 return LoginCode.ALREADY_ONLINE
+            elif 'Password is error' in error_msg:
+                return LoginCode.WRONG_PASSWORD
+            elif 'User is disabled' in error_msg:
+                return LoginCode.USER_DISABLED
             else:
                 logging.debug(f'login res is not ok, got error_msg: {error_msg}')
+                print(json_obj)
                 return LoginCode.FAILED
         return LoginCode.SUCCEED
 

@@ -40,6 +40,13 @@ def execute():
                 print('Account in arrear.')
             elif code == network.LoginCode.ALREADY_ONLINE:
                 print('Account already online.')
+            elif code == network.LoginCode.WRONG_PASSWORD:
+                print('Wrong password.')
+            elif code == network.LoginCode.USER_DISABLED:
+                print('User disabled.')
+            else:
+                print('Login failed.')
+
     elif action == 'logout':
         account = store.read_account()
         if account is None:
