@@ -2,7 +2,7 @@ import base64
 import hashlib
 import hmac
 import json
-from typing import Dict
+from typing import Dict, List
 
 
 def gen_info(data: Dict, token: str) -> str:
@@ -68,7 +68,7 @@ def _x_encode(msg: str, key: str) -> str:
     return _l(v, False)
 
 
-def _s(a: str, b: bool) -> list[int]:
+def _s(a: str, b: bool) -> List[int]:
     c = len(a)
     v = []
     for i in range(0, c, 4):
