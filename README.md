@@ -6,7 +6,7 @@
 
 ### Via binary
 
-Download binary file from GitHub release page.
+Download binary file from GitHub  [release page](https://github.com/c-my/srun-cli-bit/releases/latest) .
 
 ## Usage
 
