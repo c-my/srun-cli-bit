@@ -17,7 +17,7 @@ def execute():
     parser = argparse.ArgumentParser(description='Sign in/out BIT campus network')
     subparsers = parser.add_subparsers(dest='action')
 
-    login_paraser = subparsers.add_parser('login', help='login to network')
+    login_parser = subparsers.add_parser('login', help='login to network')
     logout_parser = subparsers.add_parser('logout', help='sign out network')
     info_parser = subparsers.add_parser('info', help='get account info')
 
@@ -34,8 +34,8 @@ def execute():
             print('Please run config first')
         else:
             code = n.login(account)
-            if code == network.LoginCode.SUCCEED:
-                print('Login succeed!')
+            if code == network.LoginCode.SUCCESSFUL:
+                print('Login successful!')
             elif code == network.LoginCode.ARREARAGE:
                 print('Account in arrear.')
             elif code == network.LoginCode.ALREADY_ONLINE:
@@ -53,8 +53,8 @@ def execute():
             print('Please run config first')
         else:
             code = n.logout(account)
-            if code == network.LogoutCode.SUCCEED:
-                print('Logout succeed!')
+            if code == network.LogoutCode.SUCCESSFUL:
+                print('Logout successful!')
             elif code == network.LogoutCode.ALREADY_OFFLINE:
                 print('You are not online.')
             else:
@@ -68,6 +68,8 @@ def execute():
 
         account = model.Account(user, passwd)
         store.write_account(account)
+    else:
+        parser.print_help()
 
 
 def _print_info(info: Dict):
