@@ -13,7 +13,7 @@ from srunbit.encrypt import hash
 
 class LoginCode(Enum):
     FAILED = 0
-    SUCCEED = 1
+    SUCCESSFUL = 1
     ALREADY_ONLINE = 2
     ARREARAGE = 3
     WRONG_PASSWORD = 4
@@ -22,7 +22,7 @@ class LoginCode(Enum):
 
 class LogoutCode(Enum):
     FAILED = 0
-    SUCCEED = 1
+    SUCCESSFUL = 1
     ALREADY_OFFLINE = 2
 
 
@@ -31,7 +31,7 @@ class Network:
         self.__base_url = 'http://10.0.0.55'
         self.__challenge_url = "/cgi-bin/get_challenge"
         self.__portal_url = "/cgi-bin/srun_portal"
-        self.__succeed_url = "/cgi-bin/rad_user_info"
+        self.__successful_url = "/cgi-bin/rad_user_info"
 
     def login(self, account: model.Account) -> LoginCode:
         try:
@@ -77,7 +77,7 @@ class Network:
                 logging.debug(f'login res is not ok, got error_msg: {error_msg}')
                 print(json_obj)
                 return LoginCode.FAILED
-        return LoginCode.SUCCEED
+        return LoginCode.SUCCESSFUL
 
     def logout(self, account: model.Account) -> LogoutCode:
         form_logout = model.logout(account.username)
@@ -92,11 +92,11 @@ class Network:
                 return LogoutCode.ALREADY_OFFLINE
             else:
                 return LogoutCode.FAILED
-        return LogoutCode.SUCCEED
+        return LogoutCode.SUCCESSFUL
 
     def get_info(self) -> Union[Dict, None]:
         try:
-            json_obj = self._get_json(self.__base_url + self.__succeed_url)
+            json_obj = self._get_json(self.__base_url + self.__successful_url)
         except Exception as e:
             logging.debug(f'get info failed: {e}')
             return None
