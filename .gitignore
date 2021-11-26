@@ -1,1 +1,5 @@
 dist
+main.build
+main.dist
+main.onefile-build
+*.egg-info
