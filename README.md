@@ -26,8 +26,8 @@ Download binary file from GitHub  [release page](https://github.com/c-my/srun-cl
 
 ## Note
 ### Latest Binary Version Compile Option
-* Windows10(python3.9.7): `python -m nuitka src/main.py --onefile --standalone --mingw64`
-* Ubuntu(python3.9.0): `python -m nuitka --onefile --standalone src/main.py`
+* Windows10(python3.9.15): `python -m nuitka src/main.py --onefile --standalone --mingw64`
+* Ubuntu(python3.9.15): `python -m nuitka --onefile --standalone src/main.py`
 
 **_Windows binary version NOT works on Windows7_**
 
