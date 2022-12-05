@@ -2,7 +2,7 @@
 
 ### Via pip
 
-`python -m pip install srun-cli-bit`
+`python -m pip install -U srun-cli-bit`
 
 ### Via binary
 
