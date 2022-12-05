@@ -7,11 +7,11 @@ from typing import Dict, List
 
 def gen_info(data: Dict, token: str) -> str:
     json_obj = {
-        'username': data['username'],
-        'password': data['password'],
-        'ip': data['ip'],
-        'acid': data['ac_id'],
-        'enc_ver': 'srun_bx1',
+        "username": data["username"],
+        "password": data["password"],
+        "ip": data["ip"],
+        "acid": data["ac_id"],
+        "enc_ver": "srun_bx1",
     }
     json_str = json.dumps(json_obj)
     x_encode_res = _x_encode(json_str, token)
@@ -20,22 +20,22 @@ def gen_info(data: Dict, token: str) -> str:
     dict_val = "LVoJPiCN2R8G90yg+hmFHuacZ1OWMnrsSTXkYpUq/3dlbfKwv6xztjI7DeBE45QA="
     d = dict()
     for idx, v in enumerate(dict_key):
-        d[v] = dict_val[idx:idx + 1]
+        d[v] = dict_val[idx : idx + 1]
 
     b64_arr = bytearray()
     for c in x_encode_res:
         b64_arr.append(ord(c))
 
     b64_res = base64.standard_b64encode(b64_arr)
-    target = ''
+    target = ""
     for s in b64_res:
         target += d[chr(s)]
     return f"{{SRBX1}}{target}"
 
 
 def _x_encode(msg: str, key: str) -> str:
-    if msg == '':
-        return ''
+    if msg == "":
+        return ""
     v = _s(msg, True)
     k = _s(key, False)
     n = len(v) - 1
@@ -72,30 +72,39 @@ def _s(a: str, b: bool) -> List[int]:
     c = len(a)
     v = []
     for i in range(0, c, 4):
-        tmp = _char_code_at(a, i) | (_char_code_at(a, i + 1) << 8) | (
-                _char_code_at(a, i + 2) << 16) | _char_code_at(a, i + 3) << 24
+        tmp = (
+            _char_code_at(a, i)
+            | (_char_code_at(a, i + 1) << 8)
+            | (_char_code_at(a, i + 2) << 16)
+            | _char_code_at(a, i + 3) << 24
+        )
         v.append(tmp)
     if b:
         v.append(c)
     return v
 
 
-def _l(a: [int], b: bool) -> str:
+def _l(a: List[int], b: bool) -> str:
     d = len(a)
     c = (d - 1) << 2
     if b:
         m = a[d - 1]
         if m < c - 3 or m > c:
-            return ''
+            return ""
         c = m
     res = []
     for s in a:
-        item = chr(s & 0xff) + chr((s >> 8) & 0xff) + chr((s >> 16) & 0xff) + str(chr((s >> 24) & 0xff))
+        item = (
+            chr(s & 0xFF)
+            + chr((s >> 8) & 0xFF)
+            + chr((s >> 16) & 0xFF)
+            + str(chr((s >> 24) & 0xFF))
+        )
         res.append(item)
     if b:
-        return ''.join(res)[0:c]
+        return "".join(res)[0:c]
     else:
-        return ''.join(res)
+        return "".join(res)
 
 
 def _char_code_at(s: str, index: int) -> int:
@@ -105,19 +114,23 @@ def _char_code_at(s: str, index: int) -> int:
 
 
 def pwd_hmd5(password: str, token: str) -> str:
-    hm = hmac.new(bytes(token, encoding='utf-8'), bytes(password, encoding='utf-8'), digestmod='MD5')
+    hm = hmac.new(
+        bytes(token, encoding="utf-8"),
+        bytes(password, encoding="utf-8"),
+        digestmod="MD5",
+    )
     hmd5 = hm.hexdigest()
-    return f'{{MD5}}{hmd5}'
+    return f"{{MD5}}{hmd5}"
 
 
 def checksum(data: Dict, token: str) -> str:
-    username = data['username']
-    password = data['password']
-    acid = data['ac_id']
-    ip = data['ip']
-    info = data['info']
-    str_list = ['', username, password[5:], acid, ip, '200', '1', info]
+    username = data["username"]
+    password = data["password"]
+    acid = data["ac_id"]
+    ip = data["ip"]
+    info = data["info"]
+    str_list = ["", username, password[5:], acid, ip, "200", "1", info]
     sum_str = token.join(str_list)
     sh = hashlib.sha1()
-    sh.update(bytes(sum_str, encoding='utf-8'))
+    sh.update(bytes(sum_str, encoding="utf-8"))
     return sh.hexdigest()
